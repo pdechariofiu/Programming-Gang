@@ -1,0 +1,269 @@
+// @author azulbarros
+
+package hauntedtower;
+
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
+public class hauntedTower {
+    int userFloor;
+    int userLocation;
+    String userName = "No name";
+    String exitOption;
+    String itemChoice;
+    String userChoice;
+    String[] backpack = new String[11];
+    String userItemChoice;
+    Object[] yesNoChoices = {"Yes", "No, Thanks"};
+    
+    String iconPath = "/Users/azulbarros/NetBeansProjects/hauntedTower/icons/";
+    ImageIcon welcomeIcon = new ImageIcon(iconPath + "welcome.jpeg");
+    ImageIcon actionIcon = new ImageIcon(iconPath + "action!.png");
+    ImageIcon questionIcon = new ImageIcon(iconPath + "questionMark.jpg");
+    ImageIcon frontDoorIcon = new ImageIcon(iconPath + "frontDoor.png");
+    ImageIcon livingRoomIcon = new ImageIcon(iconPath + "livingRoom.jpeg");
+    ImageIcon diningRoomIcon = new ImageIcon(iconPath + "diningRoom.jpg");
+    ImageIcon bathroomIcon = new ImageIcon(iconPath + "bathroom.jpeg");
+    ImageIcon kitchenIcon = new ImageIcon(iconPath + "kitchen.jpeg");
+    ImageIcon pantryIcon = new ImageIcon(iconPath + "pantry.jpeg");
+    ImageIcon firstBedIcon = new ImageIcon(iconPath + "firstBed.jpeg");
+    ImageIcon lastBedIcon = new ImageIcon(iconPath + "lastBed.jpeg");
+    ImageIcon secondBathIcon = new ImageIcon(iconPath + "secondBath.jpeg");
+    ImageIcon masterBedIcon = new ImageIcon(iconPath + "masterBed.jpeg");
+    ImageIcon masterBathIcon = new ImageIcon(iconPath + "masterBath.jpeg");
+    ImageIcon closetIcon = new ImageIcon(iconPath + "masterCloset.jpeg");
+    ImageIcon gameOverIcon = new ImageIcon(iconPath + "gameOver.jpg");
+        
+    public String getUserChoice () {
+       return userChoice;
+    }
+    public String getUserName () {
+       return userName;
+    }
+    // Get backpack item  IDK HOW to do a JOptionPane for this
+    public void printBackpackItems () {
+       int numItems = backpack.length;
+       for(int i = 0; i <= numItems; i++) {
+           System.out.print(backpack[i] + " ");
+       }
+    } 
+    public void endTower () {
+        JOptionPane.showMessageDialog(null, "Congrats! you made it! \n Here"
+                + " are your items: \n");
+        printBackpackItems();
+    }
+    public void setUserName () { // Asks for users name 
+       userName = JOptionPane.showInputDialog(null, "What is your name?", null, 
+               JOptionPane.PLAIN_MESSAGE, questionIcon, null, "").toString();
+   }
+   public void showWelcomeMessage () { // Welcomes user
+       JOptionPane.showMessageDialog(null, "Welcome " + userName +
+               ", and goodluck in the Tower of Terror! \nHope you make it out "
+               + "alive... \nHAHAhahAHAhaAH\n", "Welcome.",
+               JOptionPane.PLAIN_MESSAGE, welcomeIcon);
+   }
+    public void startTowerOptions () { // Start of the tower 
+       Object[] startChoices = {"Elevator", "Item"};
+       userChoice = (String)JOptionPane.showInputDialog(
+            null, "     Where would you like to go?", "An important question..."
+            , JOptionPane.PLAIN_MESSAGE, frontDoorIcon, startChoices,
+            "Elevator");
+       if(userChoice.equals("Item")) {
+           backpack[10] = "Front door item";
+           elevator(); ////// this happens without explaining so it looks like they chose elevator but they didn't
+       } else{
+           elevator();
+       }
+   }
+    public void elevator () {
+        Object[] elevatorChoices = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+        userFloor = (int) JOptionPane.showInputDialog(null, "What floor?",
+            "Pick.", JOptionPane.PLAIN_MESSAGE, questionIcon, 
+            elevatorChoices, "1");
+        if (userFloor == userLocation) {
+            System.out.print("Pick another floor.");
+            elevator();
+        }
+        userLocation = userFloor;
+        moreOptions();
+    }
+    public void boilerRoomOptions() {
+        itemChoice =  (String) JOptionPane.showInputDialog(null,"Would you like"
+            + "to get item?", "Surprise!", JOptionPane.PLAIN_MESSAGE,
+            questionIcon, yesNoChoices, "Yes");
+        if (itemChoice.equals("Yes")) {
+            backpack[0] = "Boiler item";
+            elevator();
+        } else {
+            elevator();   /////// idk what other options to add, also needs text
+        }
+    }
+    public void steamRoomOptions() {
+        itemChoice =  (String) JOptionPane.showInputDialog(null,"Would you like"
+            + "to open the chest?", "Surprise!", JOptionPane.PLAIN_MESSAGE,
+            questionIcon, yesNoChoices, "Yes");
+        if (itemChoice.equals("Yes")) {
+            backpack[1] = "Attic Key";
+            elevator();
+        } else {
+            elevator();   /////// idk what other options to add, also needs text
+        }
+    }
+    public void livingRoomOptions () {
+        itemChoice =  (String) JOptionPane.showInputDialog(null,"Would you like"
+            + "to inspect?", "Surprise!", JOptionPane.PLAIN_MESSAGE,
+            questionIcon, yesNoChoices, "Yes");
+        if (itemChoice.equals("Yes")) {
+            backpack[2] = "Living room item";
+            elevator();
+        } else {
+            elevator();   /////// idk what other options to add, also needs text
+        }
+    }
+    public void bathroomOptions() {
+        itemChoice =  (String) JOptionPane.showInputDialog(null,"Would you like"
+            + "to grab?", "Surprise!", JOptionPane.PLAIN_MESSAGE,
+            questionIcon, yesNoChoices, "Yes");
+        if (itemChoice.equals("Yes")) {
+            backpack[3] = "Bathroom item";
+            elevator();
+        } else {
+            elevator();   /////// idk what other options to add, also needs text
+        }
+    }
+    public void diningRoomOptions() {
+        itemChoice =  (String) JOptionPane.showInputDialog(null,"Would you like"
+            + "to see?", "Surprise!", JOptionPane.PLAIN_MESSAGE,
+            questionIcon, yesNoChoices, "Yes");
+        if (itemChoice.equals("Yes")) {
+            backpack[4] = "Dining room item";
+            elevator();
+        } else {
+            elevator();   /////// idk what other options to add, also needs text
+        }
+    }
+    public void kitchenOptions() {
+        itemChoice =  (String) JOptionPane.showInputDialog(null,"Would you like"
+            + "to get it?", "Surprise!", JOptionPane.PLAIN_MESSAGE,
+            questionIcon, yesNoChoices, "Yes");
+        if (itemChoice.equals("Yes")) {
+            backpack[5] = "Kitchen item";
+            elevator();
+        } else {
+            elevator();   /////// idk what other options to add, also needs text
+        }
+    }
+    public void pantryOptions() {
+        itemChoice =  (String) JOptionPane.showInputDialog(null,"Would you like"
+            + "to gety spagetti?", "Surprise!", JOptionPane.PLAIN_MESSAGE,
+            questionIcon, yesNoChoices, "Yes");
+        if (itemChoice.equals("Yes")) {
+            backpack[6] = "Pantry item";
+            elevator();
+        } else {
+            elevator();   /////// idk what other options to add, also needs text
+        }
+    }
+    public void masterBedOptions() {
+        itemChoice =  (String) JOptionPane.showInputDialog(null,"Would you like"
+            + "to ????", "Surprise!", JOptionPane.PLAIN_MESSAGE,
+            questionIcon, yesNoChoices, "Yes");
+        if (itemChoice.equals("Yes")) {
+            backpack[7] = "Master bed item";
+            elevator();
+        } else {
+            elevator();   /////// idk what other options to add, also needs text
+        }
+    }
+    public void firstBedOptions() {
+        itemChoice =  (String) JOptionPane.showInputDialog(null,"Would you like"
+            + "to ????", "Surprise!", JOptionPane.PLAIN_MESSAGE,
+            questionIcon, yesNoChoices, "Yes");
+        if (itemChoice.equals("Yes")) {
+            backpack[8] = "First bed item";
+            elevator();
+        } else {
+            elevator();   /////// idk what other options to add, also needs text
+        }
+    }
+    public void secondBedOptions() {
+        itemChoice =  (String) JOptionPane.showInputDialog(null,"Would you like"
+            + "to ????", "Surprise!", JOptionPane.PLAIN_MESSAGE,
+            questionIcon, yesNoChoices, "Yes");
+        if (itemChoice.equals("Yes")) {
+            backpack[9] = "Second bed item";
+            elevator();
+        } else {
+            elevator();   /////// idk what other options to add, also needs text
+        }
+    }
+    public void atticOptions() {
+        itemChoice =  (String) JOptionPane.showInputDialog(null,"Would you like"
+            + "to ???", "Surprise!", JOptionPane.PLAIN_MESSAGE,
+            questionIcon, yesNoChoices, "Yes");
+        if (itemChoice.equals("Yes")) {
+            backpack[9] = "Front Door Key";
+            elevator();
+        } else {
+            elevator();   /////// idk what other options to add, also needs text
+        }
+    }
+    public void moreOptions() {
+        //while (userChoice.equals("Elevator")) {
+            switch (userFloor) {
+                case(1):
+                    Object [] basementChoice = {"Steam Room", "Boiler Room"};
+                    userChoice =  (String) JOptionPane.showInputDialog(null,
+                    "Which room?", "??", JOptionPane.PLAIN_MESSAGE,
+                    questionIcon, basementChoice, "Steam Room");
+                    if (userChoice.equals("Steam Room")) {
+                        steamRoomOptions();
+                    } else {
+                        boilerRoomOptions();
+                    }
+                    break;
+                case(2): 
+                    if (backpack[9].equals("Front Door Key")) {
+                        exitOption = (String) JOptionPane.showInputDialog(null,
+                    "Would you like to exit?", "??", JOptionPane.PLAIN_MESSAGE,
+                    questionIcon, yesNoChoices, "No");
+                    } else {
+                        elevator(); 
+                    }
+                    if (exitOption.equals("Yes")) {
+                        endTower();
+                    } else {
+                        elevator();
+                    }
+                    break;
+                case(3):
+                    livingRoomOptions();
+                    break;
+                case(4):
+                    bathroomOptions();
+                    break;
+                case(5):
+                    diningRoomOptions();
+                    break;
+                case(6):
+                    kitchenOptions();
+                    break;
+                case(7):
+                    pantryOptions();
+                    break;
+                case(8):
+                    masterBedOptions();
+                    break;
+                case(9):
+                    firstBedOptions();
+                    break;
+                case(10):
+                    secondBedOptions();
+                    break;
+                case(11):
+                    atticOptions();
+                    break;
+            }
+        }
+    }
+//}
