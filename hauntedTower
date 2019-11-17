@@ -1,22 +1,25 @@
-// @author azulbarros @pdechario
+//@author azulbarros @pdechario
+//NEEDS: eigthFloorOptions() method and added to moreOptions() (former Master Bathroom),
+//comments for methods and anything else that's complicated
+//add dieInTower() where the flow chart says theyre supposed to lose the game
+//update moreOptions() to work with methods 
+
 
 package hauntedtower;
-
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-
+        
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+public class hauntedTower{
     int userFloor;
     int userLocation;
     String userName = "No name";
     String exitOption;
     String itemChoice;
     String userChoice;
-    ArrayList<String> backpackItemsArray = new ArrayList<>(); //Stores items as user selects them
-    String backpackItemsString; //Output of backpackItemsArray;
+    ArrayList<String> backpackArray = new ArrayList<>(); //Stores items as user selects them
+    String backpackString; //Output of backpackArray;
     String userItemChoice;
     Object[] yesNoChoices = {"Yes", "No, Thanks"};
     
@@ -45,32 +48,33 @@ import javax.swing.JOptionPane;
        return userName;
     }
     
+    //Adds item to backpackArray if not previously in backpackArray
     public void addToBackpack(String item){
-        if (!backpackItemsArray.contains(item)){
-            backpackItemsArray.add(item);
+        if (!backpackArray.contains(item)){
+            backpackArray.add(item);
         }
     }
 
-    //Prints backpackItemsArray items as a string formatted based on number of items
+    //Prints backpackArray items as a string formatted based on number of items
     public void printBackpackItems(ArrayList anArray){
         int sizeOfList = anArray.size();
 
-        backpackItemsString = anArray.get(0).toString();
+        backpackString = anArray.get(0).toString();
 
         //Formats ArrayList as a String based on (respectively), 2 items, 1 item, or more than 2 items
         switch (sizeOfList){
             case 2:
-                backpackItemsString = backpackItemsString + " and " + anArray.get(sizeOfList - 1).toString();
+                backpackString = backpackString + " and " + anArray.get(sizeOfList - 1).toString();
                 break;
 
             default:
                 if (sizeOfList > 2){
                     for (int i = 1; i < sizeOfList - 1; ++i){
-                        if (!backpackItemsString.contains(anArray.get(i).toString())){
-                            backpackItemsString = backpackItemsString + ", " + anArray.get(i).toString();            
+                        if (!backpackString.contains(anArray.get(i).toString())){
+                            backpackString = backpackString + ", " + anArray.get(i).toString();            
                         }
                     }
-                    backpackItemsString = backpackItemsString + ", and " + anArray.get(sizeOfList - 1).toString();
+                    backpackString = backpackString + ", and " + anArray.get(sizeOfList - 1).toString();
                 break;
                 }
         }
@@ -79,13 +83,14 @@ import javax.swing.JOptionPane;
     public void exitTower () { //End game if user successfully exits tower
         JOptionPane.showMessageDialog(null, "Congrats! you made it! \n Here"
                 + " are your items: \n");
-        printBackpackItems(backpackItemsArray);
+        printBackpackItems(backpackArray);
+        System.exit(0);
     }
     
     public void dieInTower () { //End game if user is killed by item
         JOptionPane.showMessageDialog(null, "You died in the tower! "
                 + "\nHere are your items: \n");
-        printBackpackItems(backpackItemsArray);
+        printBackpackItems(backpackArray);
         System.exit(0);
     }
     
@@ -94,45 +99,71 @@ import javax.swing.JOptionPane;
                JOptionPane.PLAIN_MESSAGE, questionIcon, null, "").toString();
     }
    
-    public void showWelcomeMessage () { // Welcomes user
+    public void showWelcomeMessage () { // Welcomes user and starts them at 1st floor
        JOptionPane.showMessageDialog(null, "Welcome " + userName +
                ", and goodluck in the Tower of Terror! \nHope you make it out "
                + "alive... \nHAHAhahAHAhaAH\n", "Welcome.",
                JOptionPane.PLAIN_MESSAGE, welcomeIcon);
-   }
-    public void startTowerOptions () { // Start of the tower //I dont get this PED
-       Object[] startChoices = {"Elevator", "Item"};
-       userChoice = (String)JOptionPane.showInputDialog(
-            null, "     Where would you like to go?", "An important question..."
-            , JOptionPane.PLAIN_MESSAGE, frontDoorIcon, startChoices,
-            "Elevator");
-       if(userChoice.equals("Item")) {
-           backpack[10] = "Front door item";
-           elevator(); ////// this happens without explaining so it looks like they chose elevator but they didn't
-       } else{
-           elevator();
-       }
-   }
+       firstFloorOptions();
+    }
+    
     public void elevator () {
         Object[] elevatorChoices = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+        
         userFloor = (int) JOptionPane.showInputDialog(null, "What floor?",
             "Pick.", JOptionPane.PLAIN_MESSAGE, questionIcon, 
             elevatorChoices, "1");
+        
         if (userFloor == userLocation) {
             System.out.print("Pick another floor.");
             elevator();
         }
+        
         userLocation = userFloor;
+        
         moreOptions();
     }
     
+    //Navigates 1st floor and return to elevator or exitTower() if user has a key
+    public void firstFloorOptions() {
+        String [] floorOptions = {"Boiler Room", "Storage Room", "Front Door"};
+
+        int choice = JOptionPane.showOptionDialog(null, "You're on the 1st Floor."
+                + "\nWhere would you like to go?", "1st Floor", 
+                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                floorOptions, floorOptions[0]);
+        
+        switch (choice){
+            case 0:
+                boilerRoomOptions();
+                break;
+            case 1:
+                storageRoomOptions();
+                break;
+            case 2:
+                if (backpackArray.contains("Front Door Key")){
+                    exitTower();
+                    break;
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "You don't have the key.",
+                            "Front Door", JOptionPane.PLAIN_MESSAGE);
+                    firstFloorOptions();
+                    break;
+                }
+        }
+    }
+    
+    //Navigate Boiler Room and return to 1st Floor
     public void boilerRoomOptions() {
         JOptionPane.showMessageDialog(null,"You're in the Boiler Room."
             + "\nThere's nothing in here.", 
                 "Surprise!", JOptionPane.PLAIN_MESSAGE);
-        elevator();
+        
+        firstFloorOptions();
     }
     
+    //Navigate Storage Room and return to 1st Floor
     public void storageRoomOptions() {
         String [] itemOptions = {"Chest", "Ignore Item"};
         
@@ -151,10 +182,11 @@ import javax.swing.JOptionPane;
             default:
                 break;
         }
-        elevator();
+        firstFloorOptions();
     }
     
-    public void livingRoomOptions () {
+    //Navigate 2nd floor and return to elevator
+    public void secondFloorOptions () {
         String [] itemOptions = {"Chest", "Ignore Item"};
         int choice = JOptionPane.showOptionDialog(null, "You're on the 2nd Floor. "
                 + "\nThere's a chest in here. "
@@ -172,11 +204,13 @@ import javax.swing.JOptionPane;
             default:
                 break;
         }
-        elevator();   /////// idk what other options to add, also needs text
-        }
+        elevator();
+    }
 
-    public void bathroomOptions() {
+    //Navigate 3rd floor and return to elevator  
+    public void thirdFloorOptions() {
         String [] itemOptions = {"Mirror", "Shower", "Ignore Items"};
+        
         int choice = JOptionPane.showOptionDialog(null, "You're on the 3rd Floor. "
                 + "\nAnd what is that dark red stain on the wall? "
                 + "\nWould you like to take a peek in the Mirror? Step in the Shower? Move along?", 
@@ -202,8 +236,9 @@ import javax.swing.JOptionPane;
         }
         elevator();
     }
-    
-    public void diningRoomOptions() {
+
+    //Navigate 4th floor and return to elevator      
+    public void fourthFloorOptions() {
         String [] itemOptions = {"Candelabra", "Ignore Item"};
    
         int choice = JOptionPane.showOptionDialog(null, "You're on the 4th Floor. "
@@ -226,7 +261,8 @@ import javax.swing.JOptionPane;
         elevator();
     }
     
-    public void kitchenOptions() {
+    //Navigate 5th floor and return to elevator      
+    public void fifthFloorOptions() {
          String [] itemOptions = {"Cabinets", "Refrigerator", "Ignore Items"};
         
         int choice = JOptionPane.showOptionDialog(null, "You're on the 5th Floor. "
@@ -255,7 +291,8 @@ import javax.swing.JOptionPane;
         elevator();
     }
     
-    public void pantryOptions() {
+    //Navigate 6th floor and return to elevator
+    public void sixthFloorOptions() {
         String [] itemOptions = {"Dusty Recipe Box", "Broom", "Ignore Items"};
         
         int choice = JOptionPane.showOptionDialog(null, "You're on the 6th Floor. "
@@ -285,7 +322,8 @@ import javax.swing.JOptionPane;
         elevator();   /////// idk what other options to add, also needs text
     }
     
-    public void masterBedOptions() {
+    //Navigate 7th floor and return to elevator
+    public void seventhFloorOptions() {
         String [] itemOptions = {"Jewelry Box", "Ignore Items"};
         
         int choice = JOptionPane.showOptionDialog(null, "You're on the 7th Floor. "
@@ -309,7 +347,10 @@ import javax.swing.JOptionPane;
         elevator();
     }
     
-    public void firstBedOptions() {
+    //NEED 8th FLOOR
+    
+    //Navigate 9th floor and return to elevator
+    public void ninthFloorOptions() {
         String [] itemOptions = {"Windows", "Rocking Chair", "Ignore Items"};
         
         int choice = JOptionPane.showOptionDialog(null, "You're on the 9th Floor."
@@ -338,7 +379,8 @@ import javax.swing.JOptionPane;
         elevator();
     }
     
-    public void secondBedOptions() {
+    //Navigate 10th floor and return to elevator
+    public void tenthFloorOptions() {
         String [] itemOptions = {"Doll House", "Dresser", "Ignore Items"};
         
         int choice = JOptionPane.showOptionDialog(null, "You're on the 10th Floor."
@@ -368,8 +410,9 @@ import javax.swing.JOptionPane;
         elevator();
     }
     
+    //Navigate Attic and return to elevator
     public void atticOptions() {
-        if (backpackItemsArray.contains("Attic Key")){
+        if (backpackArray.contains("Attic Key")){
             String [] itemOptions = {"Chest", "Ignore Item"};
         
             int choice = JOptionPane.showOptionDialog(null, "You're in the Attic."
@@ -382,7 +425,7 @@ import javax.swing.JOptionPane;
                 case 0:
                     JOptionPane.showMessageDialog(null, "You open the chest and find the key to the 1st Floor!",
                             "Surprise!", JOptionPane.PLAIN_MESSAGE);
-                    addToBackpack("1st Floor Key");
+                    addToBackpack("Front Door Key");
                     break;
                 default:
                     break;
@@ -410,7 +453,7 @@ import javax.swing.JOptionPane;
                     }
                     break;
                 case(2): 
-                    if (backpackItemsArray.contains("Front Door Key")) {
+                    if (backpackArray.contains("Front Door Key")) {
                         exitOption = (String) JOptionPane.showInputDialog(null,
                     "Would you like to exit?", "??", JOptionPane.PLAIN_MESSAGE,
                     questionIcon, yesNoChoices, "No");
@@ -424,33 +467,39 @@ import javax.swing.JOptionPane;
                     }
                     break;
                 case(3):
-                    livingRoomOptions();
+                    secondFloorOptions();
                     break;
                 case(4):
-                    bathroomOptions();
+                    thirdFloorOptions();
                     break;
                 case(5):
-                    diningRoomOptions();
+                    fourthFloorOptions();
                     break;
                 case(6):
-                    kitchenOptions();
+                    fifthFloorOptions();
                     break;
                 case(7):
-                    pantryOptions();
+                    sixthFloorOptions();
                     break;
                 case(8):
-                    masterBedOptions();
+                    seventhFloorOptions();
                     break;
+                //NEED 8th FLOOR
                 case(9):
-                    firstBedOptions();
+                    ninthFloorOptions();
                     break;
                 case(10):
-                    secondBedOptions();
+                    tenthFloorOptions();
                     break;
                 case(11):
                     atticOptions();
                     break;
             }
         }
+    
+    public static void main(args [] String) {
+        hauntedTower letsPlay = new hauntedTower();
+        letsPlay.setUserName();
+        letsPlay.showWelcomeMessage();
     }
-//}
+}
