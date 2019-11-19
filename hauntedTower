@@ -50,18 +50,24 @@ public class hauntedTower{
     
     //Plays background music while playing the game
     public void playMusic(String filePath) {
-        InputStream music;
-        try 
-        {
-        
-            music = new FileInputStream(new File(filePath));
-            AudioSteam audio = new AudioSteam(music);
-
-            AudioPlayer.player.start(Audio);
-
+        int counter = 0;
+        do{
+     
+            InputStream music;
+            
+            try {
+                music = new FileInputStream(new File(filepath));
+                AudioStream Audio= new AudioStream(music);
+           
+                AudioPlayer.player.start(Audio);
+                //Sets the start of the audio
+            }
+            
+            catch(IOException e){
+            //Incase there is an error
+            }
         }
-        catch(IOException e) {
-        }
+        }while(counter <=200);
     }
 
     //Adds item to backpackArray if not previously in backpackArray
