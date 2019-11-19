@@ -56,10 +56,10 @@ public class hauntedTower{
             InputStream music;
             
             try {
-                music = new FileInputStream(new File(filepath));
-                AudioStream Audio= new AudioStream(music);
+                music = new FileInputStream(new File(filePath));
+                AudioStream audio= new AudioStream(music);
            
-                AudioPlayer.player.start(Audio);
+                AudioPlayer.player.start(audio);
                 //Sets the start of the audio
             }
             
