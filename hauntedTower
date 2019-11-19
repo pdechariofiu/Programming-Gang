@@ -139,7 +139,8 @@ public class hauntedTower{
         
         moreOptions();
     }
-    
+
+    //Navigate basement and head to storage room, boiler room, or elevator
     public void basementOptions() {
         String [] floorOptions = {"Boiler Room", "Storage Room", "Elevator"};
         
@@ -245,13 +246,13 @@ public class hauntedTower{
                     JOptionPane.showMessageDialog(null, "A ghost escapes out of the "
                             + "chest and scares you to death.", "BOO!",JOptionPane.PLAIN_MESSAGE);
                     addToBackpack("Ghost");
-                    //FIXME need a gameOver() if they die in the tower
+                    dieInTower();
                     break;
                 default:
                     break;
             }
         }
-            elevator();
+        elevator();
     }
 
     //Navigate 3rd floor and return to elevator  
@@ -332,6 +333,7 @@ public class hauntedTower{
                             + "\nThe dishes start flying all over the room and one hits you in the head.", 
                             "Surprise!", JOptionPane.PLAIN_MESSAGE);
                     addToBackpack("Flying Dishes");
+                    dieInTower();
                     break;
                 case 1:
                     JOptionPane.showMessageDialog(null, "Looks like someone went to "
@@ -373,6 +375,7 @@ public class hauntedTower{
                             + "\nIt flies up into the air and heads straight at you.", 
                             "Surprise!", JOptionPane.PLAIN_MESSAGE);
                     addToBackpack("Flying Broom");
+                    dieInTower();
                     break;
                 default:
                     break;
@@ -429,6 +432,7 @@ public class hauntedTower{
                             + "\nWhere'd he go? How'd he get behind " + userName + "?", 
                             "Surprise!", JOptionPane.PLAIN_MESSAGE);
                     addToBackpack("Evil Child");
+                    dieInTower();
                     break;
                 case 1:
                     JOptionPane.showMessageDialog(null, "You take a seat on the Rocking "
@@ -449,7 +453,7 @@ public class hauntedTower{
         int choice; 
 
         while (choice != 2) {
-            int choice = JOptionPane.showOptionDialog(null, "You're on the 10th Floor."
+            choice = JOptionPane.showOptionDialog(null, "You're on the 10th Floor."
                     + "\nWhat a cute Doll House! And a grand Dresser? "
                     + "\nWould you like to play with the dolls or try on a new outfit?", 
                     "10th Floor", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
@@ -462,6 +466,7 @@ public class hauntedTower{
                             + "\nThey're dancing towards you.", 
                             "Surprise!", JOptionPane.PLAIN_MESSAGE);
                     addToBackpack("Possessed Doll House");
+                    dieInTower();
                     break;
                 case 1:
                     JOptionPane.showMessageDialog(null, "You open a drawer in the Dresser "
