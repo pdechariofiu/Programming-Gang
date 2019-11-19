@@ -140,225 +140,270 @@ public class hauntedTower{
         moreOptions();
     }
     
+    public void basementOptions() {
+        String [] floorOptions = {"Boiler Room", "Storage Room", "Elevator"};
+        
+        int choice;
+
+        while (choice != 2) {
+            choice = JOptionPane.showOptionDialog(null, "You're in the Basement."
+                    + "\nWhere would you like to go?", "Basement", 
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                    floorOptions, floorOptions[0]);
+
+            switch (choice){
+                case 0:
+                    boilerRoomOptions();
+                    break;
+                case 1:
+                    storageRoomOptions();
+                    break;
+                default:
+                    break;
+            }
+        }
+        elevator();
+    }
+        
+        
     //Navigates 1st floor and return to elevator or exitTower() if user has a key
     public void firstFloorOptions() {
-        String [] floorOptions = {"Boiler Room", "Storage Room", "Front Door"};
+        String [] floorOptions = {"Front Door", "Elevator"};
+        int choice;
+            while (choice != 1) {
+            choice = JOptionPane.showOptionDialog(null, "You're on the 1st Floor."
+                    + "\nWhere would you like to go?", "1st Floor", 
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                    floorOptions, floorOptions[0]);
 
-        int choice = JOptionPane.showOptionDialog(null, "You're on the 1st Floor."
-                + "\nWhere would you like to go?", "1st Floor", 
-                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                floorOptions, floorOptions[0]);
-        
-        switch (choice){
-            case 0:
-                boilerRoomOptions();
-                break;
-            case 1:
-                storageRoomOptions();
-                break;
-            case 2:
-                if (backpackArray.contains("Front Door Key")){
-                    exitTower();
+            switch (choice){
+                case 0:
+                    if (backpackArray.contains("Front Door Key")){
+                        exitTower();
+                        break;
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "You don't have the key.",
+                                "Front Door", JOptionPane.PLAIN_MESSAGE);
+                        firstFloorOptions();
+                        break;
+                    }
+                default:
                     break;
-                }
-                else{
-                    JOptionPane.showMessageDialog(null, "You don't have the key.",
-                            "Front Door", JOptionPane.PLAIN_MESSAGE);
-                    firstFloorOptions();
-                    break;
-                }
+            }
         }
     }
     
-    //Navigate Boiler Room and return to 1st Floor
+    //Navigate Boiler Room and return to Basement
     public void boilerRoomOptions() {
         JOptionPane.showMessageDialog(null,"You're in the Boiler Room."
             + "\nThere's nothing in here.", 
                 "Surprise!", JOptionPane.PLAIN_MESSAGE);
         
-        firstFloorOptions();
+        basementOptions();
     }
     
-    //Navigate Storage Room and return to 1st Floor
+    //Navigate Storage Room and return to Basement
     public void storageRoomOptions() {
-        String [] itemOptions = {"Chest", "Ignore Item"};
+        String [] itemOptions = {"Chest", "Basement"};
+        int choice = 0;
         
-        int choice = JOptionPane.showOptionDialog(null, "You're in the Storage Room."
-                + "\nA chest sits in the room."
-                + "\nWould you like to open it?", "Storage Room",  
-                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, 
-                itemOptions, itemOptions[0]);
-        
-        switch (choice) {
-            case 0:
-                JOptionPane.showMessageDialog(null, "You found the key to the attic!",
-                    "Surprise!", JOptionPane.PLAIN_MESSAGE);
-                addToBackpack("Attic Key");
-                break;
-            default:
-                break;
+        while (choice != 1) {
+            choice = JOptionPane.showOptionDialog(null, "You're in the Storage Room."
+                    + "\nA chest sits in the room."
+                    + "\nWould you like to open it?", "Storage Room",  
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, 
+                    itemOptions, itemOptions[0]);
+
+            switch (choice) {
+                case 0:
+                    JOptionPane.showMessageDialog(null, "You found the key to the attic!",
+                        "Surprise!", JOptionPane.PLAIN_MESSAGE);
+                    addToBackpack("Attic Key");
+                    break;
+                default:
+                    break;
+            }
         }
-        firstFloorOptions();
+        basementOptions();
     }
     
     //Navigate 2nd floor and return to elevator
     public void secondFloorOptions () {
-        String [] itemOptions = {"Chest", "Ignore Item"};
-        int choice = JOptionPane.showOptionDialog(null, "You're on the 2nd Floor. "
-                + "\nThere's a chest in here. "
-                + "\nWould you like to see what's inside the chest?", "2nd Floor", 
-                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, 
-                itemOptions, itemOptions[0]);
+        String [] itemOptions = {"Chest", , "Elevator"};
+        int choice;
+        
+        while (choice != 1) {
+            choice = JOptionPane.showOptionDialog(null, "You're on the 2nd Floor. "
+                    + "\nThere's a chest in here. "
+                    + "\nWould you like to see what's inside the chest?", "2nd Floor", 
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, 
+                    itemOptions, itemOptions[0]);
 
-        switch (choice){
-            case 0:
-                JOptionPane.showMessageDialog(null, "A ghost escapes out of the "
-                        + "chest and scares you to death.", "BOO!",JOptionPane.PLAIN_MESSAGE);
-                addToBackpack("Ghost");
-                //FIXME need a gameOver() if they die in the tower
-                break;
-            default:
-                break;
+            switch (choice){
+                case 0:
+                    JOptionPane.showMessageDialog(null, "A ghost escapes out of the "
+                            + "chest and scares you to death.", "BOO!",JOptionPane.PLAIN_MESSAGE);
+                    addToBackpack("Ghost");
+                    //FIXME need a gameOver() if they die in the tower
+                    break;
+                default:
+                    break;
+            }
         }
-        elevator();
+            elevator();
     }
 
     //Navigate 3rd floor and return to elevator  
     public void thirdFloorOptions() {
-        String [] itemOptions = {"Mirror", "Shower", "Ignore Items"};
-        
-        int choice = JOptionPane.showOptionDialog(null, "You're on the 3rd Floor. "
-                + "\nAnd what is that dark red stain on the wall? "
-                + "\nWould you like to take a peek in the Mirror? Step in the Shower? Move along?", 
-                "3rd Floor", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
-                null, itemOptions, itemOptions[0]);
-        
-        switch (choice) {
-            case 0:
-                JOptionPane.showMessageDialog(null, "There's a bloody face staring "
-                        + "back at you...It's you."
-                        + "\nYou blink for a second and the blood is gone.", 
-                        "Surprise!", JOptionPane.PLAIN_MESSAGE);
-                addToBackpack("Memory of a Bloody Face");
-                break;
-            case 1: 
-                JOptionPane.showMessageDialog(null, "The room has suddenly steamed"
-                        + " up and you feel fingers touching the back of your neck.",
-                        "Surprise!", JOptionPane.INFORMATION_MESSAGE);
-                addToBackpack("Creepy Fingers");
-                break;
-            default:
-                break;
+        String [] itemOptions = {"Mirror", "Shower", "Elevator"};        
+        int choice;
+
+        while (choice != 2) {
+            choice = JOptionPane.showOptionDialog(null, "You're on the 3rd Floor. "
+                    + "\nAnd what is that dark red stain on the wall? "
+                    + "\nWould you like to take a peek in the Mirror? Step in the Shower? Move along?", 
+                    "3rd Floor", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
+                    null, itemOptions, itemOptions[0]);
+
+            switch (choice) {
+                case 0:
+                    JOptionPane.showMessageDialog(null, "There's a bloody face staring "
+                            + "back at you...It's you."
+                            + "\nYou blink for a second and the blood is gone.", 
+                            "Surprise!", JOptionPane.PLAIN_MESSAGE);
+                    addToBackpack("Memory of a Bloody Face");
+                    break;
+                case 1: 
+                    JOptionPane.showMessageDialog(null, "The room has suddenly steamed"
+                            + " up and you feel fingers touching the back of your neck.",
+                            "Surprise!", JOptionPane.INFORMATION_MESSAGE);
+                    addToBackpack("Creepy Fingers");
+                    break;
+                default:
+                    break;
+            }
         }
         elevator();
     }
 
     //Navigate 4th floor and return to elevator      
     public void fourthFloorOptions() {
-        String [] itemOptions = {"Candelabra", "Ignore Item"};
-   
-        int choice = JOptionPane.showOptionDialog(null, "You're on the 4th Floor. "
-                + "\nWhat a beautiful Candelabra on the table! "
-                + "\nShall we sit down and have a closer look?", "3rd Floor", 
-                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
-                null, itemOptions, itemOptions[0]);
-        
-        switch (choice){
-            case 0:
-                JOptionPane.showMessageDialog(null, "You take a seat to get a look "
-                        + "when the Candelabra lights up. "
-                        + "\nThe shadow of death appears behind you and covers you "
-                        + "in darkness.", "BOO!", JOptionPane.PLAIN_MESSAGE);
-                addToBackpack("Candelabra");
-                break;
-            default:
-                break;
+        String [] itemOptions = {"Candelabra", , "Elevator"};
+        int choice;
+
+        while (choice != 1) {
+            int choice = JOptionPane.showOptionDialog(null, "You're on the 4th Floor. "
+                    + "\nWhat a beautiful Candelabra on the table! "
+                    + "\nShall we sit down and have a closer look?", "3rd Floor", 
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
+                    null, itemOptions, itemOptions[0]);
+
+            switch (choice){
+                case 0:
+                    JOptionPane.showMessageDialog(null, "You take a seat to get a look "
+                            + "when the Candelabra lights up. "
+                            + "\nThe shadow of death appears behind you and covers you "
+                            + "in darkness.", "BOO!", JOptionPane.PLAIN_MESSAGE);
+                    addToBackpack("Candelabra");
+                    break;
+                default:
+                    break;
+            }
         }
         elevator();
     }
     
     //Navigate 5th floor and return to elevator      
     public void fifthFloorOptions() {
-         String [] itemOptions = {"Cabinets", "Refrigerator", "Ignore Items"};
+        String [] itemOptions = {"Cabinets", "Refrigerator", "Elevator"};
+        int choice;
         
-        int choice = JOptionPane.showOptionDialog(null, "You're on the 5th Floor. "
-                + "\nHungry? "
-                + "\nWhy don't we check the Cabinets or the Refrigerator?", 
-                "5th Floor", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
-                null, itemOptions, itemOptions[0]);
-        
-        switch (choice){
-            case 0:
-                JOptionPane.showMessageDialog(null, "You open the cabinet. "
-                        + "\nThe dishes start flying all over the room and one hits you in the head.", 
-                        "Surprise!", JOptionPane.PLAIN_MESSAGE);
-                addToBackpack("Flying Dishes");
-                break;
-            case 1:
-                JOptionPane.showMessageDialog(null, "Looks like someone went to "
-                        + "that famous soul food restaurant. "
-                        + "\nYou open the leftovers and find your soul in the food.", 
-                        "BOO!", JOptionPane.PLAIN_MESSAGE);
-                addToBackpack("Soul Food");
-                break;
-            default:
-                break;  
+        while (choice != 2) {
+            int choice = JOptionPane.showOptionDialog(null, "You're on the 5th Floor. "
+                    + "\nHungry? "
+                    + "\nWhy don't we check the Cabinets or the Refrigerator?", 
+                    "5th Floor", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
+                    null, itemOptions, itemOptions[0]);
+
+            switch (choice){
+                case 0:
+                    JOptionPane.showMessageDialog(null, "You open the cabinet. "
+                            + "\nThe dishes start flying all over the room and one hits you in the head.", 
+                            "Surprise!", JOptionPane.PLAIN_MESSAGE);
+                    addToBackpack("Flying Dishes");
+                    break;
+                case 1:
+                    JOptionPane.showMessageDialog(null, "Looks like someone went to "
+                            + "that famous soul food restaurant. "
+                            + "\nYou open the leftovers and find your soul in the food.", 
+                            "BOO!", JOptionPane.PLAIN_MESSAGE);
+                    addToBackpack("Soul Food");
+                    break;
+                default:
+                    break;  
+            }
         }
         elevator();
     }
     
     //Navigate 6th floor and return to elevator
     public void sixthFloorOptions() {
-        String [] itemOptions = {"Dusty Recipe Box", "Broom", "Ignore Items"};
+        String [] itemOptions = {"Dusty Recipe Box", "Broom", "Elevator"};
+        int choice;
         
-        int choice = JOptionPane.showOptionDialog(null, "You're on the 6th Floor. "
-                + "\n*SNEEZE* "
-                + "\nThat Recipe Box is covered in dust. "
-                + "\nShould we take a look inside or sweep this place up with the Broom?", 
-                "6th Floor", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
-                null, itemOptions, itemOptions[0]);
-        
-        switch (choice) {
-            case 0:
-                JOptionPane.showMessageDialog(null, "You open up the Dusty Recipe Box. "
-                        + "\nA recipe for devil's food cake appears. "
-                        + "\nLooks like " + userName + " is one of the ingredients.", 
-                        "Surprise!", JOptionPane.PLAIN_MESSAGE);
-                addToBackpack("Recipe for Devil's Food Cake");
-                break;
-            case 1:
-                JOptionPane.showMessageDialog(null, "You reach for the Broom."
-                        + "\nIt flies up into the air and heads straight at you.", 
-                        "Surprise!", JOptionPane.PLAIN_MESSAGE);
-                addToBackpack("Flying Broom");
-                break;
-            default:
-                break;
+        while (choice != 2) {
+            choice = JOptionPane.showOptionDialog(null, "You're on the 6th Floor. "
+                    + "\n*SNEEZE* "
+                    + "\nThat Recipe Box is covered in dust. "
+                    + "\nShould we take a look inside or sweep this place up with the Broom?", 
+                    "6th Floor", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
+                    null, itemOptions, itemOptions[0]);
+
+            switch (choice) {
+                case 0:
+                    JOptionPane.showMessageDialog(null, "You open up the Dusty Recipe Box. "
+                            + "\nA recipe for devil's food cake appears. "
+                            + "\nLooks like " + userName + " is one of the ingredients.", 
+                            "Surprise!", JOptionPane.PLAIN_MESSAGE);
+                    addToBackpack("Recipe for Devil's Food Cake");
+                    break;
+                case 1:
+                    JOptionPane.showMessageDialog(null, "You reach for the Broom."
+                            + "\nIt flies up into the air and heads straight at you.", 
+                            "Surprise!", JOptionPane.PLAIN_MESSAGE);
+                    addToBackpack("Flying Broom");
+                    break;
+                default:
+                    break;
+            }
         }
-        elevator();   /////// idk what other options to add, also needs text
+        elevator();
     }
     
     //Navigate 7th floor and return to elevator
     public void seventhFloorOptions() {
-        String [] itemOptions = {"Jewelry Box", "Ignore Items"};
-        
-        int choice = JOptionPane.showOptionDialog(null, "You're on the 7th Floor. "
-                + "\nA beautiful Jewelry Box sits on an armoire. "
-                + "\nWould you like to take a peek inside?", 
-                "7th Floor", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
-                null, itemOptions, itemOptions[0]);
-        
-        switch (choice) {
-            case 0:
-                JOptionPane.showMessageDialog(null, "A gleaming stone sits inside "
-                        + "of the Jewelry Box. You reach for it. "
-                        + "\nThat was a mistake " + userName + "."
-                        + "\nThat's the cursed Hope Diamond. But there's no hope left "
-                        + "for you.", "Surprise!", JOptionPane.PLAIN_MESSAGE);
-                addToBackpack("Cursed Hope");
-                break;
-            default:
-                break;
+        String [] itemOptions = {"Jewelry Box", , "Elevator"};
+        int choice;
+        while (choice != 1) {
+            choice = JOptionPane.showOptionDialog(null, "You're on the 7th Floor. "
+                    + "\nA beautiful Jewelry Box sits on an armoire. "
+                    + "\nWould you like to take a peek inside?", 
+                    "7th Floor", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
+                    null, itemOptions, itemOptions[0]);
+
+            switch (choice) {
+                case 0:
+                    JOptionPane.showMessageDialog(null, "A gleaming stone sits inside "
+                            + "of the Jewelry Box. You reach for it. "
+                            + "\nThat was a mistake " + userName + "."
+                            + "\nThat's the cursed Hope Diamond. But there's no hope left "
+                            + "for you.", "Surprise!", JOptionPane.PLAIN_MESSAGE);
+                    addToBackpack("Cursed Hope");
+                    break;
+                default:
+                    break;
+            }
         }
         elevator();
     }
@@ -368,60 +413,66 @@ public class hauntedTower{
     //Navigate 9th floor and return to elevator
     public void ninthFloorOptions() {
         String [] itemOptions = {"Windows", "Rocking Chair", "Ignore Items"};
-        
-        int choice = JOptionPane.showOptionDialog(null, "You're on the 9th Floor."
-                + "\nAnd what beautiful Windows! Take a look outside " + userName + "!"
-                + "\nIf not, grab a seat in that wooden Rocking Chair in the corner.", 
-                "9th Floor", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
-                null, itemOptions, itemOptions[0]);
-        
-        switch (choice) {
-            case 0:
-                JOptionPane.showMessageDialog(null, "It's awfully late. "
-                        + "\nWhy is that child swinging outside? "
-                        + "\nWhere'd he go? How'd he get behind " + userName + "?", 
-                        "Surprise!", JOptionPane.PLAIN_MESSAGE);
-                addToBackpack("Evil Child");
-                break;
-            case 1:
-                JOptionPane.showMessageDialog(null, "You take a seat on the Rocking "
-                        + "Chair when it suddenly starts rocking on its own.", 
-                        "Surprise!", JOptionPane.PLAIN_MESSAGE);
-                addToBackpack("Self-Rocking Chair");
-                break;
-            default:
-                break;
+        int choice;
+
+        while (choice != 2) {
+            choice = JOptionPane.showOptionDialog(null, "You're on the 9th Floor."
+                    + "\nAnd what beautiful Windows! Take a look outside " + userName + "!"
+                    + "\nIf not, grab a seat in that wooden Rocking Chair in the corner.", 
+                    "9th Floor", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
+                    null, itemOptions, itemOptions[0]);
+
+            switch (choice) {
+                case 0:
+                    JOptionPane.showMessageDialog(null, "It's awfully late. "
+                            + "\nWhy is that child swinging outside? "
+                            + "\nWhere'd he go? How'd he get behind " + userName + "?", 
+                            "Surprise!", JOptionPane.PLAIN_MESSAGE);
+                    addToBackpack("Evil Child");
+                    break;
+                case 1:
+                    JOptionPane.showMessageDialog(null, "You take a seat on the Rocking "
+                            + "Chair when it suddenly starts rocking on its own.", 
+                            "Surprise!", JOptionPane.PLAIN_MESSAGE);
+                    addToBackpack("Self-Rocking Chair");
+                    break;
+                default:
+                    break;
+            }
         }
         elevator();
     }
     
     //Navigate 10th floor and return to elevator
     public void tenthFloorOptions() {
-        String [] itemOptions = {"Doll House", "Dresser", "Ignore Items"};
-        
-        int choice = JOptionPane.showOptionDialog(null, "You're on the 10th Floor."
-                + "\nWhat a cute Doll House! And a grand Dresser? "
-                + "\nWould you like to play with the dolls or try on a new outfit?", 
-                "10th Floor", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
-                null, itemOptions, itemOptions[0]);
-        
-        switch (choice) {
-            case 0:
-                JOptionPane.showMessageDialog(null, "You crouch down to the Doll "
-                        + "House when the dolls start dancing on their own. "
-                        + "\nThey're dancing towards you.", 
-                        "Surprise!", JOptionPane.PLAIN_MESSAGE);
-                addToBackpack("Possessed Doll House");
-                break;
-            case 1:
-                JOptionPane.showMessageDialog(null, "You open a drawer in the Dresser "
-                        + "when - BOO! - a ghost flies out. "
-                        + "\nYou're looking awfully pale.", 
-                        "Surprise!", JOptionPane.PLAIN_MESSAGE);
-                addToBackpack("Ghost");
-                break;
-            default:
-                break;
+        String [] itemOptions = {"Doll House", "Dresser", , "Elevator"};
+        int choice; 
+
+        while (choice != 2) {
+            int choice = JOptionPane.showOptionDialog(null, "You're on the 10th Floor."
+                    + "\nWhat a cute Doll House! And a grand Dresser? "
+                    + "\nWould you like to play with the dolls or try on a new outfit?", 
+                    "10th Floor", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
+                    null, itemOptions, itemOptions[0]);
+
+            switch (choice) {
+                case 0:
+                    JOptionPane.showMessageDialog(null, "You crouch down to the Doll "
+                            + "House when the dolls start dancing on their own. "
+                            + "\nThey're dancing towards you.", 
+                            "Surprise!", JOptionPane.PLAIN_MESSAGE);
+                    addToBackpack("Possessed Doll House");
+                    break;
+                case 1:
+                    JOptionPane.showMessageDialog(null, "You open a drawer in the Dresser "
+                            + "when - BOO! - a ghost flies out. "
+                            + "\nYou're looking awfully pale.", 
+                            "Surprise!", JOptionPane.PLAIN_MESSAGE);
+                    addToBackpack("Ghost");
+                    break;
+                default:
+                    break;
+            }
         }
         elevator();
     }
