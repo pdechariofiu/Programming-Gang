@@ -1,17 +1,17 @@
 //@author azulbarros @pdechario
-//NEEDS: eigthFloorOptions() method and added to moreOptions() (former Master Bathroom),
+//NEEDS: 
 //comments for methods and anything else that's complicated
-//add dieInTower() where the flow chart says theyre supposed to lose the game
 //update moreOptions() to work with methods 
+//8th floor
 
+//I ran code and it dropped off when i selected elevator  
 
-package hauntedtower;
-        
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import java.io.InputStream;
 
-public class hauntedTower{
+public class HauntedHouse{
     int userFloor;
     int userLocation;
     String userName = "No name";
@@ -56,7 +56,7 @@ public class hauntedTower{
             InputStream music;
             
             try {
-                music = new FileInputStream(new File(filePath));
+                FileInputStream music = new FileInputStream(new File(filePath));
                 AudioStream audio= new AudioStream(music);
            
                 AudioPlayer.player.start(audio);
@@ -67,7 +67,7 @@ public class hauntedTower{
             //Incase there is an error
             }
         }
-        }while(counter <=200);
+        while(counter <=200);
     }
 
     //Adds item to backpackArray if not previously in backpackArray
@@ -150,7 +150,7 @@ public class hauntedTower{
     public void basementOptions() {
         String [] floorOptions = {"Boiler Room", "Storage Room", "Elevator"};
         
-        int choice;
+        int choice = 0;
 
         while (choice != 2) {
             choice = JOptionPane.showOptionDialog(null, "You're in the Basement."
@@ -176,7 +176,7 @@ public class hauntedTower{
     //Navigates 1st floor and return to elevator or exitTower() if user has a key
     public void firstFloorOptions() {
         String [] floorOptions = {"Front Door", "Elevator"};
-        int choice;
+        int choice = 0;
             while (choice != 1) {
             choice = JOptionPane.showOptionDialog(null, "You're on the 1st Floor."
                     + "\nWhere would you like to go?", "1st Floor", 
@@ -237,8 +237,8 @@ public class hauntedTower{
     
     //Navigate 2nd floor and return to elevator
     public void secondFloorOptions () {
-        String [] itemOptions = {"Chest", , "Elevator"};
-        int choice;
+        String [] itemOptions = {"Chest", "Elevator"};
+        int choice = 0;
         
         while (choice != 1) {
             choice = JOptionPane.showOptionDialog(null, "You're on the 2nd Floor. "
@@ -264,7 +264,7 @@ public class hauntedTower{
     //Navigate 3rd floor and return to elevator  
     public void thirdFloorOptions() {
         String [] itemOptions = {"Mirror", "Shower", "Elevator"};        
-        int choice;
+        int choice =0;
 
         while (choice != 2) {
             choice = JOptionPane.showOptionDialog(null, "You're on the 3rd Floor. "
@@ -296,11 +296,11 @@ public class hauntedTower{
 
     //Navigate 4th floor and return to elevator      
     public void fourthFloorOptions() {
-        String [] itemOptions = {"Candelabra", , "Elevator"};
-        int choice;
+        String [] itemOptions = {"Candelabra", "Elevator"};
+        int choice = 0;
 
         while (choice != 1) {
-            int choice = JOptionPane.showOptionDialog(null, "You're on the 4th Floor. "
+            choice = JOptionPane.showOptionDialog(null, "You're on the 4th Floor. "
                     + "\nWhat a beautiful Candelabra on the table! "
                     + "\nShall we sit down and have a closer look?", "3rd Floor", 
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
@@ -324,10 +324,10 @@ public class hauntedTower{
     //Navigate 5th floor and return to elevator      
     public void fifthFloorOptions() {
         String [] itemOptions = {"Cabinets", "Refrigerator", "Elevator"};
-        int choice;
+        int choice = 0;
         
         while (choice != 2) {
-            int choice = JOptionPane.showOptionDialog(null, "You're on the 5th Floor. "
+            choice = JOptionPane.showOptionDialog(null, "You're on the 5th Floor. "
                     + "\nHungry? "
                     + "\nWhy don't we check the Cabinets or the Refrigerator?", 
                     "5th Floor", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
@@ -358,7 +358,7 @@ public class hauntedTower{
     //Navigate 6th floor and return to elevator
     public void sixthFloorOptions() {
         String [] itemOptions = {"Dusty Recipe Box", "Broom", "Elevator"};
-        int choice;
+        int choice = 0;
         
         while (choice != 2) {
             choice = JOptionPane.showOptionDialog(null, "You're on the 6th Floor. "
@@ -392,8 +392,8 @@ public class hauntedTower{
     
     //Navigate 7th floor and return to elevator
     public void seventhFloorOptions() {
-        String [] itemOptions = {"Jewelry Box", , "Elevator"};
-        int choice;
+        String [] itemOptions = {"Jewelry Box", "Elevator"};
+        int choice = 0;
         while (choice != 1) {
             choice = JOptionPane.showOptionDialog(null, "You're on the 7th Floor. "
                     + "\nA beautiful Jewelry Box sits on an armoire. "
@@ -417,12 +417,10 @@ public class hauntedTower{
         elevator();
     }
     
-    //NEED 8th FLOOR
-    
     //Navigate 9th floor and return to elevator
     public void ninthFloorOptions() {
-        String [] itemOptions = {"Windows", "Rocking Chair", "Ignore Items"};
-        int choice;
+        String [] itemOptions = {"Windows", "Rocking Chair", "Elevator"};
+        int choice = 0;
 
         while (choice != 2) {
             choice = JOptionPane.showOptionDialog(null, "You're on the 9th Floor."
@@ -455,8 +453,8 @@ public class hauntedTower{
     
     //Navigate 10th floor and return to elevator
     public void tenthFloorOptions() {
-        String [] itemOptions = {"Doll House", "Dresser", , "Elevator"};
-        int choice; 
+        String [] itemOptions = {"Doll House", "Dresser", "Elevator"};
+        int choice = 0; 
 
         while (choice != 2) {
             choice = JOptionPane.showOptionDialog(null, "You're on the 10th Floor."
@@ -575,8 +573,8 @@ public class hauntedTower{
             }
         }
     
-    public static void main(args [] String) {
-        hauntedTower letsPlay = new hauntedTower();
+    public static void main(String [] args) {
+        HauntedHouse letsPlay = new HauntedHouse();
         letsPlay.setUserName();
         letsPlay.showWelcomeMessage();
     }
